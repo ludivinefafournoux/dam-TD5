@@ -30,13 +30,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Indicator.startAnimating()
         createMapView()
+        navigationItem.title = "The MAP" // titre de la page
         
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
         self.mapView.showsUserLocation = true
+        
+        // Cannes coordonnées
+        let lat = 43.551534
+        let long = 7.016659
+        // zoom sur cannes
+        let span = MKCoordinateSpanMake(0.075, 0.075)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: span)
+        mapView.setRegion(region, animated: true)
 
         
         
@@ -79,6 +89,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         
     }
+    
+    @IBOutlet weak var Indicator: UIActivityIndicatorView!
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -88,14 +100,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
-        
         for poi in pois{
             print(poi.latitude)
             print(poi.longitude)
             let annotation = MKPointAnnotation()
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
+            annotation.title = poi.name // ajout annotation titre
+            annotation.subtitle = 
             mapView.addAnnotation(annotation)
         }
         view.addSubview(mapView)
@@ -110,9 +122,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     {
         mapView = MKMapView()
         
-        let leftMargin:CGFloat = 10
+        let leftMargin:CGFloat = 0
         let topMargin:CGFloat = 60
-        let mapWidth:CGFloat = view.frame.size.width-20
+        let mapWidth:CGFloat = view.frame.size.width
         let mapHeight:CGFloat = view.frame.size.height-20
         
         mapView.frame = CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight)
