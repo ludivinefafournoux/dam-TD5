@@ -107,7 +107,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
             annotation.title = poi.name // ajout annotation titre
-            annotation.subtitle = 
+            annotation.subtitle = poi.description
             mapView.addAnnotation(annotation)
         }
         view.addSubview(mapView)
