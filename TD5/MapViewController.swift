@@ -77,7 +77,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                         longitude: Float((poi.element?.attribute(by: "longitude")?.text)!)!,
                         description: (poi.element?.attribute(by: "description")?.text)!)
                     
-                        print("test")
+                        //print("test")
                         pois.append(poi)
                     
                 
@@ -101,13 +101,32 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewWillAppear(animated)
         
         for poi in pois{
-            print(poi.latitude)
-            print(poi.longitude)
+            //print(poi.latitude)
+            //print(poi.longitude)
             let annotation = MKPointAnnotation()
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
             annotation.title = poi.name // ajout annotation titre
-            annotation.subtitle = poi.description
+            
+            // transformation lattitude longitude en localisation
+            let mylocation = CLLocation(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
+            // transforme localisation en adresse
+            CLGeocoder().reverseGeocodeLocation(mylocation, completionHandler: { (placemark, error) in
+                if error != nil {
+                    print("error")
+                } else {
+                    if let place = placemark?[0] {
+                        // vérifie que adresse et numéro ne sont pas nil
+                        if let adress = place.thoroughfare, let num = place.subThoroughfare {
+                            annotation.subtitle = num + " " + adress + " " + place.postalCode! + " " + place.locality!
+                        } else {
+                            annotation.subtitle = place.postalCode! + " " + place.locality!
+                        }
+                    }
+                }
+            })
+            
+            //annotation.subtitle = poi.description
             mapView.addAnnotation(annotation)
         }
         view.addSubview(mapView)
