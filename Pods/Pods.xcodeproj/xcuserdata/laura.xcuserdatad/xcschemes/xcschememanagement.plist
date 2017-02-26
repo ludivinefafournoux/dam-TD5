@@ -6,23 +6,33 @@
 	<dict>
 		<key>Pods-TD5.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SWXMLHash.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>16788612CBF17A044AE3CE23A0351289</key>
+		<key>1EC4719F611B8DCA3AD7CB423F6E205C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C567D731F0BFB6BA573D67D9B3E69128</key>
+		<key>953C0E8D10763A58FA02519B62ADAFB6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E37A58394FFC7B6CA2E938C5086D0942</key>
 		<dict>
 			<key>primary</key>
 			<true/>

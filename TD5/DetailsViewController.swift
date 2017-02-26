@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import SDWebImage
 
 class DetailsViewController: UIViewController {
     
@@ -20,7 +21,7 @@ class DetailsViewController: UIViewController {
         if let phoneCallURL:URL = URL(string: "tel:\(strPhoneNumber)") {
             let application:UIApplication = UIApplication.shared
             if (application.canOpenURL(phoneCallURL)) {
-                let alertController = UIAlertController(title: "Call", message: "Are you sure you want to call \n\(self.strPhoneNumber)?", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Appel", message: "Êtes-vous sûr de vouloir appeler \n\(self.strPhoneNumber)?", preferredStyle: .alert)
                 let yesPressed = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                     application.openURL(phoneCallURL)
                 })
@@ -33,15 +34,30 @@ class DetailsViewController: UIViewController {
         }
     }
     
+    // fonction ouvrir dans Plan
     @IBAction func openMap(_ sender: Any) {
+        let latitude: CLLocationDegrees = 37.2
+        let longitude: CLLocationDegrees = 22.9
+        
+        let regionDistance:CLLocationDistance = 10000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "Place Name"
+        mapItem.openInMaps(launchOptions: options)
     }
     
     // fonction bouton share
     @IBAction func share(_ sender: Any) {
         // text to share
-        let text = "This is some text that I want to share."
+        let text = "Texte à partager"
         // image to share
-        let image = UIImage(named: "Image")
+        let image = UIImage(named: "image")
         
         let activityViewController = UIActivityViewController(activityItems: [text, image],
             applicationActivities: nil)
@@ -53,6 +69,9 @@ class DetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // chargement de l'image asynchrone avec SDWebImage
+        image.sd_setImage(with: URL(string: "http://www.domain.com/path/to/image.jpg"), placeholderImage: UIImage(named: "image"))
 
         // Do any additional setup after loading the view.
     }
