@@ -16,6 +16,7 @@
 		3722E06B1E5B10C9002918CC /* TD5UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E06A1E5B10C9002918CC /* TD5UITests.swift */; };
 		3722E07A1E5B1774002918CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E0791E5B1774002918CC /* MapViewController.swift */; };
 		3729109CFC449070746FADE7 /* Pods_TD5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559BE956950ABC90CCE26F78 /* Pods_TD5.framework */; };
+		D328FAEB1E62DB7D00A72DD0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		3722E0781E5B1282002918CC /* Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Location.gpx; path = ../Location.gpx; sourceTree = "<group>"; };
 		3722E0791E5B1774002918CC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		559BE956950ABC90CCE26F78 /* Pods_TD5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TD5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				3722E0531E5B10C9002918CC /* LaunchScreen.storyboard */,
 				3722E0791E5B1774002918CC /* MapViewController.swift */,
 				3722E0561E5B10C9002918CC /* Info.plist */,
+				D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */,
 			);
 			path = TD5;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				TargetAttributes = {
 					3722E0461E5B10C8002918CC = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 9NAXXTZ9WV;
 						ProvisioningStyle = Automatic;
 					};
 					3722E05A1E5B10C9002918CC = {
@@ -342,6 +346,7 @@
 				3722E04D1E5B10C9002918CC /* ViewController.swift in Sources */,
 				3722E07A1E5B1774002918CC /* MapViewController.swift in Sources */,
 				3722E04B1E5B10C9002918CC /* AppDelegate.swift in Sources */,
+				D328FAEB1E62DB7D00A72DD0 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +499,9 @@
 			baseConfigurationReference = 0395EBFCFCF8886ECE2FA30B /* Pods-TD5.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9NAXXTZ9WV;
 				INFOPLIST_FILE = TD5/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ludivine.TD5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -507,7 +514,9 @@
 			baseConfigurationReference = 05984F1E34BB21018A61998A /* Pods-TD5.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9NAXXTZ9WV;
 				INFOPLIST_FILE = TD5/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ludivine.TD5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
