@@ -8,6 +8,7 @@ target 'TD5' do
   # Pods for TD5
   pod 'SWXMLHash', '~> 3.0.0'
   pod 'SDWebImage'
+  pod 'PureLayout'
 
 
 end
