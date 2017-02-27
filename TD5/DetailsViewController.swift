@@ -14,10 +14,19 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var map: MKMapView!
-    let strPhoneNumber = ""
+    var strPhoneNumber = ""
+    var imageUrl = ""
+    var titre = ""
     
     // fonction bouton call (ne fonctionne pas avec simulateur)
     @IBAction func call(_ sender: Any) {
+        
+        // transforme numéro au bon format
+        let index = strPhoneNumber.index(strPhoneNumber.startIndex, offsetBy: 7) // supprime le début
+        strPhoneNumber = "0" + strPhoneNumber.substring(from: index) // rajoute un 0
+        strPhoneNumber = strPhoneNumber.replacingOccurrences(of: " ", with: "") // supprime les espaces
+        //print(strPhoneNumber)
+        
         if let phoneCallURL:URL = URL(string: "tel:\(strPhoneNumber)") {
             let application:UIApplication = UIApplication.shared
             if (application.canOpenURL(phoneCallURL)) {
@@ -70,8 +79,11 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = titre // titre de la page
+        //self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+        
         // chargement de l'image asynchrone avec SDWebImage
-        image.sd_setImage(with: URL(string: "http://www.domain.com/path/to/image.jpg"), placeholderImage: UIImage(named: "image"))
+        image.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "image"))
 
         // Do any additional setup after loading the view.
     }
@@ -82,7 +94,7 @@ class DetailsViewController: UIViewController {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("la")
+        //print("la")
         if !(annotation is MKUserLocation) {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
             

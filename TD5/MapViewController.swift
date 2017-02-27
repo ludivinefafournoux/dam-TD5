@@ -49,7 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let lat = 43.551534
         let long = 7.016659
         // zoom sur cannes
-        let span = MKCoordinateSpanMake(0.075, 0.075)
+        let span = MKCoordinateSpanMake(0.060, 0.060)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: span)
         mapView.setRegion(region, animated: true)
 
@@ -105,7 +105,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         for poi in pois{
             //print(poi.latitude)
             //print(poi.longitude)
-            let annotation = CustomPointAnnotation()
+            let annotation = MKPointAnnotation()
             // emplacement pin
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
@@ -129,7 +129,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             })
             
-            annotation.id = poi.id
+            //annotation.id = poi.id
             
             //annotation.subtitle = poi.description
             mapView.addAnnotation(annotation)
@@ -160,14 +160,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     // fonction click bouton info annotation
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
+        //print((view.annotation?.title!)!)
+        //print(pois[0].phone)
+        
         // instantie la vue détails
         let details = self.storyboard?.instantiateViewController(withIdentifier: "detailView") as! DetailsViewController
         
         // défini et renseigne les variables de mywebviewcontroller à passer à la vue
-        //details.strPhoneNumber = pois.index(after: CustomPointAnnotation.id)
-        /*web.descrElement = categories[indexPath.section].elements[indexPath.row].descr
-        web.image = categories[indexPath.section].elements[indexPath.row].image_large
-        */
+        details.strPhoneNumber = pois[0].phone
+        details.imageUrl = pois[0].image
+        details.titre = pois[0].name
+        
         // push à la webview grace au controller
         self.navigationController?.pushViewController(details, animated: true)
     }
