@@ -17,6 +17,7 @@
 		3722E07A1E5B1774002918CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E0791E5B1774002918CC /* MapViewController.swift */; };
 		3729109CFC449070746FADE7 /* Pods_TD5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559BE956950ABC90CCE26F78 /* Pods_TD5.framework */; };
 		D328FAEB1E62DB7D00A72DD0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */; };
+		D34F3D091E64632000B190D6 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34F3D081E64632000B190D6 /* CustomPointAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		3722E0791E5B1774002918CC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		559BE956950ABC90CCE26F78 /* Pods_TD5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TD5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		D34F3D081E64632000B190D6 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				3722E0791E5B1774002918CC /* MapViewController.swift */,
 				3722E0561E5B10C9002918CC /* Info.plist */,
 				D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */,
+				D34F3D081E64632000B190D6 /* CustomPointAnnotation.swift */,
 			);
 			path = TD5;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3722E04D1E5B10C9002918CC /* ViewController.swift in Sources */,
+				D34F3D091E64632000B190D6 /* CustomPointAnnotation.swift in Sources */,
 				3722E07A1E5B1774002918CC /* MapViewController.swift in Sources */,
 				3722E04B1E5B10C9002918CC /* AppDelegate.swift in Sources */,
 				D328FAEB1E62DB7D00A72DD0 /* DetailsViewController.swift in Sources */,

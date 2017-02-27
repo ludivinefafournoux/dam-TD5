@@ -105,7 +105,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         for poi in pois{
             //print(poi.latitude)
             //print(poi.longitude)
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotation()
+            // emplacement pin
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
             annotation.title = poi.name // ajout annotation titre
@@ -119,8 +120,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 } else {
                     if let place = placemark?[0] {
                         // vérifie que adresse et numéro ne sont pas nil
-                        if let adress = place.thoroughfare, let num = place.subThoroughfare {
-                            annotation.subtitle = num + " " + adress + " " + place.postalCode! + " " + place.locality!
+                        if let address = place.thoroughfare, let num = place.subThoroughfare {
+                            annotation.subtitle = num + " " + address + " " + place.postalCode! + " " + place.locality!
                         } else {
                             annotation.subtitle = place.postalCode! + " " + place.locality!
                         }
@@ -128,15 +129,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             })
             
+            annotation.id = poi.id
+            
             //annotation.subtitle = poi.description
             mapView.addAnnotation(annotation)
         }
         view.addSubview(mapView)
     }
     
-    // ajout du bouton / ça marche pas :(
+    // ajout du bouton
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("la")
+        //print("la")
         if !(annotation is MKUserLocation) {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
             
@@ -152,6 +155,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         else {
             return nil
         }
+    }
+    
+    // fonction click bouton info annotation
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        // instantie la vue détails
+        let details = self.storyboard?.instantiateViewController(withIdentifier: "detailView") as! DetailsViewController
+        
+        // défini et renseigne les variables de mywebviewcontroller à passer à la vue
+        //details.strPhoneNumber = pois.index(after: CustomPointAnnotation.id)
+        /*web.descrElement = categories[indexPath.section].elements[indexPath.row].descr
+        web.image = categories[indexPath.section].elements[indexPath.row].image_large
+        */
+        // push à la webview grace au controller
+        self.navigationController?.pushViewController(details, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
