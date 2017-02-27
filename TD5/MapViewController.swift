@@ -14,8 +14,11 @@ import CoreLocation
 
 struct Poi {
     var id: Int
+    var url: String
     var name: String
+    var mail: String
     var image: String
+    var phone: String
     var latitude: Float
     var longitude: Float
     var description: String
@@ -26,7 +29,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var pois = [Poi]()
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
-
+    var myActivityIndicator:UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +41,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.mapView.showsUserLocation = true
+        self.mapView.showsUserLocation = true // permet d'accéder à la méthode mapView
+        
+        self.mapView.delegate = self
         
         // Cannes coordonnées
         let lat = 43.551534
@@ -48,8 +53,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: span)
         mapView.setRegion(region, animated: true)
 
-        
-        
         /*let leftMargin:CGFloat = 10
         let topMargin:CGFloat = 60
         let mapWidth:CGFloat = view.frame.size.width-20
@@ -62,7 +65,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.isScrollEnabled = true
         self.mapView.showsUserLocation = true*/
         
-       
         
         if let url = URL(string: "http://dam.lanoosphere.com/poi.xml") {
             if let data = try? Data(contentsOf: url) {
@@ -71,16 +73,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     
                     let poi = Poi( // création d'un objet Poi
                         id: Int((poi.element?.attribute(by: "id")?.text)!)!,
+                        url: (poi.element?.attribute(by: "url")?.text)!,
                         name: (poi.element?.attribute(by: "name")?.text)!,
+                        mail: (poi.element?.attribute(by: "description")?.text)!,
                         image: (poi.element?.attribute(by: "image")?.text)!,
+                        phone: (poi.element?.attribute(by: "phone")?.text)!,
                         latitude: Float((poi.element?.attribute(by: "latitude")?.text)!)!,
                         longitude: Float((poi.element?.attribute(by: "longitude")?.text)!)!,
                         description: (poi.element?.attribute(by: "description")?.text)!)
                     
                         //print("test")
                         pois.append(poi)
-                    
-                
                 }
             }
         
@@ -132,12 +135,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     // ajout du bouton / ça marche pas :(
-    /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         print("la")
         if !(annotation is MKUserLocation) {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
             
-            let rightButton = UIButton(type: .contactAdd)
+            let rightButton = UIButton(type: .detailDisclosure)
             rightButton.tag = annotation.hash
             
             pinView.animatesDrop = true
@@ -149,7 +152,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         else {
             return nil
         }
-    }*/
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -188,7 +191,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.mapView.setRegion(region, animated: true)
         self.locationManager.stopUpdatingLocation()
         
-            }
+    }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
     {
