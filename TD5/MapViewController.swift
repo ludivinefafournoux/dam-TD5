@@ -22,6 +22,7 @@ struct Poi {
     var latitude: Float
     var longitude: Float
     var description: String
+    //var index: Int
 }
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -30,6 +31,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
     var myActivityIndicator:UIActivityIndicatorView!
+    var index = 0
+    //let annotation = CustomPointAnnotation()
+    //var currentItem = [Int]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +109,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         for poi in pois{
             //print(poi.latitude)
             //print(poi.longitude)
-            let annotation = MKPointAnnotation()
+            let annotation = CustomPointAnnotation()
             // emplacement pin
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
@@ -129,18 +133,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             })
             
-            //annotation.id = poi.id
+            annotation.identifier = String(index)
             
             //annotation.subtitle = poi.description
             mapView.addAnnotation(annotation)
         }
+        index += 1
         view.addSubview(mapView)
     }
     
     // ajout du bouton
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         //print("la")
-        if !(annotation is MKUserLocation) {
+        /*if !(annotation is MKUserLocation) {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
             
             let rightButton = UIButton(type: .detailDisclosure)
@@ -154,7 +159,39 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         else {
             return nil
+        }*/
+        
+        if let annotation = annotation as? CustomPointAnnotation
+        {
+            let identifier = annotation.identifier
+            var view: MKPinAnnotationView
+            
+            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+            {
+                view = dequeuedView
+                view.annotation = annotation
+            }
+            else
+            {
+                /*view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.canShowCallout = true
+                view.calloutOffset = CGPoint(x: -5, y: 5)
+                view.animatesDrop = true
+                view.rightCalloutAccessoryView = UIButton.buttonWithType(UIButtonType.ContactAdd) as! UIView
+                view.pinColor = annotation.color*/
+                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                let rightButton = UIButton(type: .detailDisclosure)
+                rightButton.tag = annotation.hash
+                
+                view.animatesDrop = true
+                view.canShowCallout = true
+                view.rightCalloutAccessoryView = rightButton
+                //view.image
+                //MKAnnotationView 32 x 29
+            }
+            return view
         }
+        return nil
     }
     
     // fonction click bouton info annotation
@@ -162,16 +199,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         //print((view.annotation?.title!)!)
         //print(pois[0].phone)
+        print(Int(view.reuseIdentifier!))
         
         // instantie la vue détails
         let details = self.storyboard?.instantiateViewController(withIdentifier: "detailView") as! DetailsViewController
         
         // défini et renseigne les variables de mywebviewcontroller à passer à la vue
-        details.strPhoneNumber = pois[0].phone
-        details.imageUrl = pois[0].image
-        details.titre = pois[0].name
+        details.strPhoneNumber = pois[Int(view.reuseIdentifier!)!].phone
+        details.imageUrl = pois[Int(view.reuseIdentifier!)!].image
+        details.titre = pois[Int(view.reuseIdentifier!)!].name
         
-        // push à la webview grace au controller
+        // push à la vue grace au controller
         self.navigationController?.pushViewController(details, animated: true)
     }
     
