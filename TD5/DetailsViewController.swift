@@ -48,7 +48,7 @@ class DetailsViewController: UIViewController {
         let latitude: CLLocationDegrees = 37.2
         let longitude: CLLocationDegrees = 22.9
         
-        let regionDistance:CLLocationDistance = 10000
+        /*let regionDistance:CLLocationDistance = 10000
         let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
         let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
         let options = [
@@ -58,7 +58,12 @@ class DetailsViewController: UIViewController {
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = "Place Name"
-        mapItem.openInMaps(launchOptions: options)
+        mapItem.openInMaps(launchOptions: options)*/
+        
+        let coordinate = CLLocationCoordinate2DMake(latitude,longitude)
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
+        mapItem.name = "Target location"
+        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
     }
     
     // fonction bouton share
