@@ -26,60 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TD5/MapViewController.swift"
-            timestampString = "509300409.033467"
+            timestampString = "510253381.653307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "MapViewController"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TD5.MapViewController.locationManager.setter : __ObjC.CLLocationManager"
-                  moduleName = "TD5"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Akeno/Desktop/Cours/TD5/TD5/MapViewController.swift"
-                  timestampString = "509300424.299549"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "28"
-                  endingLineNumber = "28"
-                  offsetFromSymbolStart = "65">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TD5.MapViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; TD5.MapViewController"
-                  moduleName = "TD5"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Akeno/Desktop/Cours/TD5/TD5/MapViewController.swift"
-                  timestampString = "509300424.303678"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "28"
-                  endingLineNumber = "28"
-                  offsetFromSymbolStart = "143">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TD5.MapViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;TD5.MapViewController&gt;"
-                  moduleName = "TD5"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Akeno/Desktop/Cours/TD5/TD5/MapViewController.swift"
-                  timestampString = "509300424.307631"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "28"
-                  endingLineNumber = "28"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "locationManager(_:didUpdateLocations:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

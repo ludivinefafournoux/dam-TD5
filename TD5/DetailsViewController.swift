@@ -17,15 +17,20 @@ class DetailsViewController: UIViewController {
     var strPhoneNumber = ""
     var imageUrl = ""
     var titre = ""
+    var poi = Poi()
+    
+    
     
     // fonction bouton call (ne fonctionne pas avec simulateur)
     @IBAction func call(_ sender: Any) {
+        
+        strPhoneNumber = poi.phone
         
         // transforme numéro au bon format
         let index = strPhoneNumber.index(strPhoneNumber.startIndex, offsetBy: 7) // supprime le début
         strPhoneNumber = "0" + strPhoneNumber.substring(from: index) // rajoute un 0
         strPhoneNumber = strPhoneNumber.replacingOccurrences(of: " ", with: "") // supprime les espaces
-        //print(strPhoneNumber)
+        print(strPhoneNumber)
         
         if let phoneCallURL:URL = URL(string: "tel:\(strPhoneNumber)") {
             let application:UIApplication = UIApplication.shared
@@ -84,13 +89,14 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = titre // titre de la page
+        navigationItem.title = poi.name // titre de la page
         //self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
         
         // chargement de l'image asynchrone avec SDWebImage
-        image.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "image"))
+        image.sd_setImage(with: URL(string: poi.image), placeholderImage: UIImage(named: "image"))
 
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,6 +115,7 @@ class DetailsViewController: UIViewController {
             pinView.animatesDrop = true
             pinView.canShowCallout = true
             pinView.rightCalloutAccessoryView = rightButton
+            pinView.pinTintColor = .green
             
             return pinView
         }

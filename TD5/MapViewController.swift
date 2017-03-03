@@ -12,22 +12,25 @@ import SWXMLHash
 import CoreLocation
 
 
-struct Poi {
-    var id: Int
-    var url: String
-    var name: String
-    var mail: String
-    var image: String
-    var phone: String
-    var latitude: Float
-    var longitude: Float
-    var description: String
+public struct Poi {
+    var id: Int! = nil
+    var url: String! = nil
+    var name: String! = nil
+    var mail: String! = nil
+    var image: String! = nil
+    var phone: String! = nil
+    var latitude: Float! = nil
+    var longitude: Float! = nil
+    var description: String! = nil
     //var index: Int
+    
+    
 }
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var pois = [Poi]()
+    var poisListString = [String]()
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
     var myActivityIndicator:UIActivityIndicatorView!
@@ -45,9 +48,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
-        self.mapView.showsUserLocation = true // permet d'accéder à la méthode mapView
+        self.mapView.showsUserLocation = true
+        mapView.mapType = MKMapType.standard
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
         
-        self.mapView.delegate = self
+        self.mapView.delegate = self // permet d'accéder à la méthode mapView
         
         // Cannes coordonnées
         let lat = 43.551534
@@ -88,11 +94,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     
                         //print("test")
                         pois.append(poi)
+                        poisListString.append(poi.name);
                 }
             }
         
         // Do any additional setup after loading the view.
         }
+        
         
     }
     
@@ -199,10 +207,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         //print((view.annotation?.title!)!)
         //print(pois[0].phone)
-        print(Int(view.reuseIdentifier!))
+        //print(Int(view.reuseIdentifier!))
         
         // instantie la vue détails
         let details = self.storyboard?.instantiateViewController(withIdentifier: "detailView") as! DetailsViewController
+        
+        
+        //On récupère le poi
+        let poi = getPin(title: (view.annotation?.title!)!)
+        
+        //Si le poi n'est pas vide
+        if(poi.name != "") {
+            
+            //On envoie le poi à la vue
+            details.poi = poi
+            
         
         // défini et renseigne les variables de mywebviewcontroller à passer à la vue
         details.strPhoneNumber = pois[Int(view.reuseIdentifier!)!].phone
@@ -211,6 +230,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         // push à la vue grace au controller
         self.navigationController?.pushViewController(details, animated: true)
+        }
+    }
+    
+    //Fonction permettant de récupérer un poi en fonction de son nom
+    func getPin(title: String) -> Poi {
+        
+        var poi = Poi()
+        
+        //On regarde si le pin existe
+        if(poisListString.contains(title)) {
+            
+            //On récupère l'indice du poi dans le tableau de string
+            let indicePoi = (poisListString.index(of: title)!)
+            
+            //On récupère le poi
+            poi = pois[indicePoi]
+            
+        } else {
+            print("Poi inexistant");
+        }
+        
+        return poi
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -240,7 +281,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = locations.last
         print(location)
@@ -252,7 +293,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
     {
         print("Error \(error)" + error.localizedDescription)
     }
