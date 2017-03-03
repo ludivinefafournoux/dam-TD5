@@ -28,7 +28,7 @@ public struct Poi {
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var pois = [Poi]()
-    var poisListString = [String]()
+    var poisListe = [String]()
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
     
@@ -77,7 +77,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     
                         //print("test")
                         pois.append(poi)
-                        poisListString.append(poi.name);
+                        poisListe.append(poi.name);
                 }
             }
         }
@@ -146,7 +146,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let details = self.storyboard?.instantiateViewController(withIdentifier: "detailView") as! DetailsViewController
         
         //On récupère le poi
-        let poi = getPin(title: (view.annotation?.title!)!)
+        let poi = recuperationPoi(title: (view.annotation?.title!)!)
+        
         
         //Si le poi n'est pas vide
         if(poi.name != "") {
@@ -159,23 +160,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     
-    //Fonction permettant de récupérer un poi en fonction de son nom
-    func getPin(title: String) -> Poi {
+    //Recuperation du poi
+    func recuperationPoi(title: String) -> Poi {
         
         var poi = Poi()
         
-        //On regarde si le pin existe
-        if(poisListString.contains(title)) {
-            
-            //On récupère l'indice du poi dans le tableau de string
-            let indicePoi = (poisListString.index(of: title)!)
+            let poiIndex = (poisListe.index(of: title)!)
             
             //On récupère le poi
-            poi = pois[indicePoi]
-            
-        } else {
-            print("Poi inexistant");
-        }
+            poi = pois[poiIndex]
         
         return poi
     }
@@ -205,24 +198,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //mapView.center = view.center
         
         view.addSubview(mapView)
-    }
-    
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let location = locations.last
-        print(location)
-        let center = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: location!.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-        
-        self.mapView.setRegion(region, animated: true)
-        self.locationManager.stopUpdatingLocation()
-        
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
-    {
-        print("Error \(error)" + error.localizedDescription)
     }
     
 

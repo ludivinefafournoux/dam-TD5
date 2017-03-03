@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import SDWebImage
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var map: MKMapView!
@@ -18,6 +18,7 @@ class DetailsViewController: UIViewController {
     var imageUrl = ""
     var titre = ""
     var poi = Poi()
+    let locationManager = CLLocationManager()
     
     
     
@@ -50,33 +51,20 @@ class DetailsViewController: UIViewController {
     
     // fonction ouvrir dans Plan
     @IBAction func openMap(_ sender: Any) {
-        let latitude: CLLocationDegrees = 37.2
-        let longitude: CLLocationDegrees = 22.9
         
-        /*let regionDistance:CLLocationDistance = 10000
-        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
-        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
-        let options = [
-            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
-            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
-        ]
-        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = "Place Name"
-        mapItem.openInMaps(launchOptions: options)*/
         
-        let coordinate = CLLocationCoordinate2DMake(latitude,longitude)
+        let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(poi.latitude), CLLocationDegrees(poi.longitude))
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate, addressDictionary:nil))
-        mapItem.name = "Target location"
+        mapItem.name = poi.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
     }
     
     // fonction bouton share
     @IBAction func share(_ sender: Any) {
         // text to share
-        let text = "Texte à partager"
+        let text = poi.description
         // image to share
-        let image = UIImage(named: "image")
+        let image = URL(string: poi.image)
         
         let activityViewController = UIActivityViewController(activityItems: [text, image],
             applicationActivities: nil)
@@ -89,14 +77,92 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
         navigationItem.title = poi.name // titre de la page
-        //self.navigationItem.backBarButtonItem = UIBarButtonItem(title:"", style:.plain, target:nil, action:nil)
+
         
         // chargement de l'image asynchrone avec SDWebImage
         image.sd_setImage(with: URL(string: poi.image), placeholderImage: UIImage(named: "image"))
+        
+        map.delegate = self
+        
+        // 2.
+        let sourceLocation = CLLocationCoordinate2D(latitude: (CLLocationDegrees((locationManager.location?.coordinate.latitude)!)), longitude: (CLLocationDegrees((locationManager.location?.coordinate.longitude)!)))
+        let destinationLocation = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
+        
+        // 3.
+        let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationLocation, addressDictionary: nil)
+        
+        // 4.
+        let sourceMapPoi = MKMapItem(placemark: sourcePlacemark)
+        let destinationMapPoi = MKMapItem(placemark: destinationPlacemark)
+        
+        // 5.
+        let sourceAnnotation = MKPointAnnotation()
+        
+        if let location = sourcePlacemark.location {
+            sourceAnnotation.coordinate = location.coordinate
+        }
+        
+        
+        let destinationAnnotation = MKPointAnnotation()
+        destinationAnnotation.title = poi.name
+        
+        if let location = destinationPlacemark.location {
+            destinationAnnotation.coordinate = location.coordinate
+        }
+        
+        // 6.
+        self.map.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
+        
+        // 7.
+        let directionRequest = MKDirectionsRequest()
+        directionRequest.source = sourceMapPoi
+        directionRequest.destination = destinationMapPoi
+        directionRequest.transportType = .automobile
+        
+        // Calculate the direction
+        let directions = MKDirections(request: directionRequest)
+        
+        // 8.
+        directions.calculate {
+            (response, error) -> Void in
+            
+            guard let response = response else {
+                if let error = error {
+                    print("Error: \(error)")
+                }
+                
+                return
+            }
+            
+            let route = response.routes[0]
+            self.map.add((route.polyline), level: MKOverlayLevel.aboveRoads)
+            
+            let rect = route.polyline.boundingMapRect
+            self.map.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
+        }
 
         // Do any additional setup after loading the view.
         
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        let blue = UIColor.blue
+        renderer.strokeColor = blue.withAlphaComponent(0.5)
+        renderer.lineWidth = 5.0
+        
+        return renderer
     }
 
     override func didReceiveMemoryWarning() {
