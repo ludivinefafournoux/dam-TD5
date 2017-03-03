@@ -31,10 +31,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var poisListe = [String]()
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
+    var activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         
+                
         super.viewDidLoad()
+        
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(activityIndicator)
+        
 
         createMapView()
         navigationItem.title = "The MAP" // titre de la page
@@ -58,10 +66,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: span)
         mapView.setRegion(region, animated: true)
         
+    
         // chargement des données xml
         if let url = URL(string: "http://dam.lanoosphere.com/poi.xml") {
+            activityIndicator.startAnimating()
+
             if let data = try? Data(contentsOf: url) {
                 let xml = SWXMLHash.parse(data)
+               // myActivityIndicator.stopAnimating()
                 for poi in xml["Data"]["POI"].all { // parser les POI
                     
                     let poi = Poi( // création d'un objet Poi
@@ -80,7 +92,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                         poisListe.append(poi.name);
                 }
             }
+            //myActivityIndicator.stopAnimating()
         }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -77,14 +77,14 @@ class DetailsViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
+        //self.locationManager.requestAlwaysAuthorization()
+        //self.locationManager.requestWhenInUseAuthorization()
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
-        }
+        
         
         navigationItem.title = poi.name // titre de la page
 
@@ -150,6 +150,11 @@ class DetailsViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             
             let rect = route.polyline.boundingMapRect
             self.map.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
+        }
+            }
+        else{
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
         }
 
         // Do any additional setup after loading the view.
