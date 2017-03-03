@@ -13,6 +13,7 @@ import CoreLocation
 
 
 public struct Poi {
+    
     var id: Int! = nil
     var url: String! = nil
     var name: String! = nil
@@ -22,9 +23,6 @@ public struct Poi {
     var latitude: Float! = nil
     var longitude: Float! = nil
     var description: String! = nil
-    //var index: Int
-    
-    
 }
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -33,14 +31,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var poisListString = [String]()
     var mapView = MKMapView()
     var locationManager = CLLocationManager()
-    var myActivityIndicator:UIActivityIndicatorView!
-    var index = 0
-    //let annotation = CustomPointAnnotation()
-    //var currentItem = [Int]()
-
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        //Indicator.startAnimating()
+
         createMapView()
         navigationItem.title = "The MAP" // titre de la page
         
@@ -62,20 +57,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let span = MKCoordinateSpanMake(0.060, 0.060)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: span)
         mapView.setRegion(region, animated: true)
-
-        /*let leftMargin:CGFloat = 10
-        let topMargin:CGFloat = 60
-        let mapWidth:CGFloat = view.frame.size.width-20
-        let mapHeight:CGFloat = view.frame.size.height-20
         
-        mapView.frame = CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight)
-        
-        mapView.mapType = MKMapType.standard
-        mapView.isZoomEnabled = true
-        mapView.isScrollEnabled = true
-        self.mapView.showsUserLocation = true*/
-        
-        
+        // chargement des données xml
         if let url = URL(string: "http://dam.lanoosphere.com/poi.xml") {
             if let data = try? Data(contentsOf: url) {
                 let xml = SWXMLHash.parse(data)
@@ -97,27 +80,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                         poisListString.append(poi.name);
                 }
             }
-        
-        // Do any additional setup after loading the view.
         }
-        
-        
     }
-    
-    @IBOutlet weak var Indicator: UIActivityIndicatorView!
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         for poi in pois{
-            //print(poi.latitude)
-            //print(poi.longitude)
-            let annotation = CustomPointAnnotation()
+            
+            let annotation = MKPointAnnotation()
             // emplacement pin
             let centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(poi.latitude), longitude: CLLocationDegrees(poi.longitude))
             annotation.coordinate = centerCoordinate
@@ -140,20 +115,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     }
                 }
             })
-            
-            annotation.identifier = String(index)
-            
-            //annotation.subtitle = poi.description
             mapView.addAnnotation(annotation)
         }
-        index += 1
         view.addSubview(mapView)
     }
     
     // ajout du bouton
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        //print("la")
-        /*if !(annotation is MKUserLocation) {
+        if !(annotation is MKUserLocation) {
             let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
             
             let rightButton = UIButton(type: .detailDisclosure)
@@ -167,51 +136,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         else {
             return nil
-        }*/
-        
-        if let annotation = annotation as? CustomPointAnnotation
-        {
-            let identifier = annotation.identifier
-            var view: MKPinAnnotationView
-            
-            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
-            {
-                view = dequeuedView
-                view.annotation = annotation
-            }
-            else
-            {
-                /*view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                view.canShowCallout = true
-                view.calloutOffset = CGPoint(x: -5, y: 5)
-                view.animatesDrop = true
-                view.rightCalloutAccessoryView = UIButton.buttonWithType(UIButtonType.ContactAdd) as! UIView
-                view.pinColor = annotation.color*/
-                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                let rightButton = UIButton(type: .detailDisclosure)
-                rightButton.tag = annotation.hash
-                
-                view.animatesDrop = true
-                view.canShowCallout = true
-                view.rightCalloutAccessoryView = rightButton
-                //view.image
-                //MKAnnotationView 32 x 29
-            }
-            return view
         }
-        return nil
     }
     
     // fonction click bouton info annotation
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        //print((view.annotation?.title!)!)
-        //print(pois[0].phone)
-        //print(Int(view.reuseIdentifier!))
-        
         // instantie la vue détails
         let details = self.storyboard?.instantiateViewController(withIdentifier: "detailView") as! DetailsViewController
-        
         
         //On récupère le poi
         let poi = getPin(title: (view.annotation?.title!)!)
@@ -221,12 +153,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             
             //On envoie le poi à la vue
             details.poi = poi
-            
-        
-        // défini et renseigne les variables de mywebviewcontroller à passer à la vue
-        details.strPhoneNumber = pois[Int(view.reuseIdentifier!)!].phone
-        details.imageUrl = pois[Int(view.reuseIdentifier!)!].image
-        details.titre = pois[Int(view.reuseIdentifier!)!].name
         
         // push à la vue grace au controller
         self.navigationController?.pushViewController(details, animated: true)
@@ -260,6 +186,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func createMapView()
     {
+        
         mapView = MKMapView()
         
         let leftMargin:CGFloat = 0

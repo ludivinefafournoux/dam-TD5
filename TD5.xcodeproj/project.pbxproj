@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3722E04B1E5B10C9002918CC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E04A1E5B10C9002918CC /* AppDelegate.swift */; };
 		3722E04D1E5B10C9002918CC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E04C1E5B10C9002918CC /* ViewController.swift */; };
-		3722E0501E5B10C9002918CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3722E04E1E5B10C9002918CC /* Main.storyboard */; };
 		3722E0521E5B10C9002918CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3722E0511E5B10C9002918CC /* Assets.xcassets */; };
 		3722E0551E5B10C9002918CC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3722E0531E5B10C9002918CC /* LaunchScreen.storyboard */; };
 		3722E0601E5B10C9002918CC /* TD5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E05F1E5B10C9002918CC /* TD5Tests.swift */; };
@@ -17,7 +16,7 @@
 		3722E07A1E5B1774002918CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722E0791E5B1774002918CC /* MapViewController.swift */; };
 		3729109CFC449070746FADE7 /* Pods_TD5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559BE956950ABC90CCE26F78 /* Pods_TD5.framework */; };
 		D328FAEB1E62DB7D00A72DD0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */; };
-		D34F3D091E64632000B190D6 /* CustomPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34F3D081E64632000B190D6 /* CustomPointAnnotation.swift */; };
+		D32EAC3E1E69E8BC0099D733 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D32EAC3C1E69E8BC0099D733 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +42,6 @@
 		3722E0471E5B10C9002918CC /* TD5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TD5.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3722E04A1E5B10C9002918CC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3722E04C1E5B10C9002918CC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		3722E04F1E5B10C9002918CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3722E0511E5B10C9002918CC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3722E0541E5B10C9002918CC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3722E0561E5B10C9002918CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,7 +55,7 @@
 		3722E0791E5B1774002918CC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		559BE956950ABC90CCE26F78 /* Pods_TD5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TD5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
-		D34F3D081E64632000B190D6 /* CustomPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotation.swift; sourceTree = "<group>"; };
+		D32EAC3D1E69E8BC0099D733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,13 +120,12 @@
 				3722E0781E5B1282002918CC /* Location.gpx */,
 				3722E04A1E5B10C9002918CC /* AppDelegate.swift */,
 				3722E04C1E5B10C9002918CC /* ViewController.swift */,
-				3722E04E1E5B10C9002918CC /* Main.storyboard */,
 				3722E0511E5B10C9002918CC /* Assets.xcassets */,
 				3722E0531E5B10C9002918CC /* LaunchScreen.storyboard */,
 				3722E0791E5B1774002918CC /* MapViewController.swift */,
+				D32EAC3C1E69E8BC0099D733 /* Main.storyboard */,
 				3722E0561E5B10C9002918CC /* Info.plist */,
 				D328FAEA1E62DB7D00A72DD0 /* DetailsViewController.swift */,
-				D34F3D081E64632000B190D6 /* CustomPointAnnotation.swift */,
 			);
 			path = TD5;
 			sourceTree = "<group>";
@@ -271,9 +268,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D32EAC3E1E69E8BC0099D733 /* Main.storyboard in Resources */,
 				3722E0551E5B10C9002918CC /* LaunchScreen.storyboard in Resources */,
 				3722E0521E5B10C9002918CC /* Assets.xcassets in Resources */,
-				3722E0501E5B10C9002918CC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +344,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3722E04D1E5B10C9002918CC /* ViewController.swift in Sources */,
-				D34F3D091E64632000B190D6 /* CustomPointAnnotation.swift in Sources */,
 				3722E07A1E5B1774002918CC /* MapViewController.swift in Sources */,
 				3722E04B1E5B10C9002918CC /* AppDelegate.swift in Sources */,
 				D328FAEB1E62DB7D00A72DD0 /* DetailsViewController.swift in Sources */,
@@ -386,20 +382,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3722E04E1E5B10C9002918CC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3722E04F1E5B10C9002918CC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3722E0531E5B10C9002918CC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3722E0541E5B10C9002918CC /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D32EAC3C1E69E8BC0099D733 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D32EAC3D1E69E8BC0099D733 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
